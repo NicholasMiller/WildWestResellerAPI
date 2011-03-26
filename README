@@ -2,7 +2,8 @@ Wild West PHP API Library
 ==========================================
 
 This PHP library connects with GoDaddy's Wild West Reseller API and
-performs all operations outlined in the pre-certification.
+performs all operations outlined in the pre-certification. This library
+requires zend framework to be in your include path.
 
 In fact, I have included all the scripts necessary to complete WildWest's
 pre certification.
@@ -22,5 +23,5 @@ $results = $client->CheckAvailability(array(
     'example.biz', 'example.us'
 ));
 
-// $results['example.biz'] = [0 = unavailable|1 = available];
+// $results['example.biz'] = [0 = unavailable | 1 = available];
 
