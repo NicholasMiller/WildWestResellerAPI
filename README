@@ -25,3 +25,5 @@ $results = $client->CheckAvailability(array(
 
 // $results['example.biz'] = [0 = unavailable | 1 = available];
 
+-- Need to Finish Readme Documentation
+
