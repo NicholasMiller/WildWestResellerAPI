@@ -103,6 +103,4 @@ $shopper->dbppwd = 'defgh';
 $result = $client->OrderPrivateDomainRenewals($shopper, array($item, $item2), array($item3));
 
 echo "Step #6: Domain Renewal Complete\n\n";
-print "Info Data: <pre>" . print_r($result, true) . "</pre>";
-
 $session->completed[6] = true;

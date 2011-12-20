@@ -40,7 +40,6 @@ $client = Factory::buildClient();
 $info   = $client->Info($session->resources['example.biz'], 'example.biz', $session->orderid);
 
 echo "Step #5: Info Complete\n\n";
-print "Info Data: <pre>" . print_r($info) . "</pre>";
 
 $session->completed[5] = true;
 

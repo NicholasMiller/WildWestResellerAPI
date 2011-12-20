@@ -30,10 +30,12 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
+$session = SessionSingleton::getInstance();
+
 Factory::buildClient()->CheckAvailability(array(
     'example.biz', 'example.us'
 ));
 
 echo "Check Complete...";
-SessionSingleton::getInstance()->completed[1] = true;
+$session->completed[1] = true;
 

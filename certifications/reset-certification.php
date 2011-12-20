@@ -29,13 +29,15 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
+$session = SessionSingleton::getInstance();
+
 if (Factory::buildClient()->RestartCertification()) {
     echo 'Cetification Reset. Start on test-1.php';
 } else {
     echo 'There seems to have been an issue resetting your certification.';
 }
 
-SessionSingleton::getInstance()->unsetAll();
+$session->unsetAll();
 
 
 

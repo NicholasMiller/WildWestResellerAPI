@@ -67,8 +67,5 @@ $session->resources['example.biz-dbp'] = $messages[0]['resourceid'];
 $session->dbporderid                   = $messages[0]['orderid'];
 $session->dbpuser                      = $response['dbpuser'];
 
-var_dump($messages);
-var_dump($messages[0]['resourceid']);
-
 echo "Step 3: Complete";
 $session->completed[3] = true;
