@@ -1,4 +1,4 @@
-Wild West PHP API Library
+GoDaddy - Wild West PHP API
 ==========================================
 
 This PHP library connects with GoDaddy's Wild West Reseller API and
@@ -24,4 +24,6 @@ $results = $client->CheckAvailability(array(
 ));
 
 // $results['example.biz'] = [0 = unavailable | 1 = available];
+
+-- Need to Finish Readme Documentation
 
