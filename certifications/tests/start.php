@@ -29,16 +29,26 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$session = SessionSingleton::getInstance();
-
-if (Factory::buildClient()->RestartCertification()) {
-    echo 'Cetification Reset. Start on test-1.php';
-} else {
-    echo 'There seems to have been an issue resetting your certification.';
+if (empty($_REQUEST['account']) || empty($_REQUEST['pass'])) {
+    echo json_encode(array('succss' => false, 'message' => 'missing credentials.'));
+    exit();
 }
 
-$session->unsetAll();
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_REQUEST['account'], $_REQUEST['pass']
+);
 
+$_SESSION['account'] = $_REQUEST['account'];
+$_SESSION['pass']    = $_REQUEST['pass'];
+
+if ($client->RestartCertification()) {
+    echo json_encode(array('success' => true));
+} else {
+    echo json_encode(array('success' => false));
+}
+
+unset($_SESSION['complete']);
 
 
 

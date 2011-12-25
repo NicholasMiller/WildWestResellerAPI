@@ -56,8 +56,8 @@ require_once dirname(__FILE__) . '/common.php';
 $client = Factory::buildClient();
 $session = SessionSingleton::getInstance();
 
-if (empty($session->completed[5])) {
-    echo "Complete Step #5 first";
+if (empty($_SESSION['complete'][5])) {
+    echo json_encode(array('success' => false, 'message' => 'Complete Step #5 first'));
     exit();
 }
 
@@ -75,32 +75,34 @@ $order3->productid = '387001';
 
 $item = new WildWest_Reseller_DomainRenewal();
 $item->period = '1';
-$item->resourceid = $session->resources['example.biz'];
+$item->resourceid = $_SESSION['resources']['example.biz'];
 $item->sld = 'example';
 $item->tld = 'biz';
 $item->order = $order;
 
 $item2 = new WildWest_Reseller_DomainRenewal();
 $item2->period = '1';
-$item2->resourceid = $session->resources['example.biz'];
+$item2->resourceid = $_SESSION['resources']['example.biz'];
 $item2->sld = 'example';
 $item2->tld = 'us';
 $item2->order = $order2;
 
 $item3 = new WildWest_Reseller_DomainRenewal();
 $item3->period = '1';
-$item3->resourceid = $session->resources['example.biz-dbp'];
+$item3->resourceid = $_SESSION['resources']['example.biz-dbp'];
 $item3->sld = 'example';
 $item3->tld = 'biz';
 $item3->order = $order3;
 
 $shopper = new WildWest_Reseller_Shopper();
-$shopper->user = $session->userid;
+$shopper->user = $_SESSION['userid'];
 $shopper->pwd  = 'abcde';
-$shopper->dbpuser = $session->dbpuser;
+$shopper->dbpuser = $_SESSION['dbpuser'];
 $shopper->dbppwd = 'defgh';
 
 $result = $client->OrderPrivateDomainRenewals($shopper, array($item, $item2), array($item3));
 
-echo "Step #6: Domain Renewal Complete\n\n";
-$session->completed[6] = true;
+// echo "Step #6: Domain Renewal Complete\n\n";
+$_SESSION['complete'][6] = true;
+
+echo json_encode(array('success' => true));

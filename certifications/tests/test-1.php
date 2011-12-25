@@ -30,12 +30,13 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$session = SessionSingleton::getInstance();
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
 
-Factory::buildClient()->CheckAvailability(array(
-    'example.biz', 'example.us'
-));
+$client->CheckAvailability(array('example.biz', 'example.us'));
 
-echo "Check Complete...";
-$session->completed[1] = true;
+$_SESSION['complete'][1] = true;
+echo json_encode(array('success' => true));
 

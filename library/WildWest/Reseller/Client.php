@@ -26,7 +26,7 @@
  * @package    WildWest
  * @subpackage Reseller
  */
-class WildWest_Reseller_Client extends Zend_Soap_Client_DotNet
+class WildWest_Reseller_Client extends SoapClient
 {
     /**
      * OTE Testing WSDL File
@@ -113,7 +113,7 @@ class WildWest_Reseller_Client extends Zend_Soap_Client_DotNet
 
         $result = $this->__call('ProcessRequest', array($data));
         
-        return strcasecmp('scripting status reset', $result) === 0;
+        return strcasecmp('scripting status reset', $result->ProcessRequestResult) === 0;
     }
 
     /**

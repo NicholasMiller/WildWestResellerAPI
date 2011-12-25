@@ -29,17 +29,16 @@
  */
 
 require_once dirname(__FILE__) . '/common.php';
-$session = SessionSingleton::getInstance();
 
-if (empty($session->completed[4])) {
-    echo "Complete Step #4 first";
+if (empty($_SESSION['complete'][4])) {
+    echo json_encode(array('success' => false, 'message' => 'Complete Step #4 first'));
     exit();
 }
 
-$client = Factory::buildClient();
+$client = $_SESSION['client'];
 $info   = $client->Info($session->resources['example.biz'], 'example.biz', $session->orderid);
 
-echo "Step #5: Info Complete\n\n";
+//echo "Step #5: Info Complete\n\n";
 
-$session->completed[5] = true;
-
+$_SESSION['complete'][5] = true;
+echo json_encode(array('succes' => true));

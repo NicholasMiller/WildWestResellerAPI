@@ -29,11 +29,11 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$client = Factory::buildClient();
+$client = $_SESSION['client'];
 $session = SessionSingleton::getInstance();
 
-if (empty($session->completed[2])) {
-    echo "Complete Step #2 first";
+if (empty($_SESSION['complete'][2])) {
+    echo json_encode(array('success' => false, 'message' => 'Complete Step #2 first'));
     exit();
 }
 
@@ -41,7 +41,7 @@ $shopper = new WildWest_Reseller_Shopper();
 $shopper->firstname = 'Artemus';
 $shopper->lastname  = 'Gordon';
 $shopper->phone     = '+18885551212';
-$shopper->user      = $session->userid;
+$shopper->user      = $_SESSION['userid'];
 $shopper->pwd       = 'abcde';
 $shopper->email     = 'agordon@wildwestdomains.com';
 $shopper->dbpuser   = 'createNew';
@@ -58,14 +58,15 @@ $dbp = new WildWest_Reseller_DomainByProxy();
 $dbp->sld        = 'example';
 $dbp->tld        = 'biz';
 $dbp->order      = $order;
-$dbp->resourceid = $session->resources['example.biz'];
+$dbp->resourceid = $_SESSION['resources']['example.biz'];
 
 $response = $client->OrderDomainPrivacy($shopper, array($dbp));
 
 $messages = $client->Poll();
-$session->resources['example.biz-dbp'] = $messages[0]['resourceid'];
-$session->dbporderid                   = $messages[0]['orderid'];
-$session->dbpuser                      = $response['dbpuser'];
+$_SESSION['resources']['example.biz-dbp'] = $messages[0]['resourceid'];
+$_SESSION['dbporderid']                   = $messages[0]['orderid'];
+$_SESSION['dbpuser']                      = $response['dbpuser'];
 
-echo "Step 3: Complete";
-$session->completed[3] = true;
+// echo "Step 3: Complete";
+$_SESSION['complete'][3] = true;
+echo json_encode(array('success' => true));

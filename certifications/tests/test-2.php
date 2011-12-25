@@ -29,11 +29,10 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$client = Factory::buildClient();
-$session = SessionSingleton::getInstance();
+$client = $_SESSION['client'];
 
-if (empty($session->completed[1])) {
-    echo "Complete Step #1 first";
+if (empty($_SESSION['complete'][1])) {
+    echo json_encode(array('success' => false, 'message' => 'Complete Step #1 first'));
     exit();
 }
 
@@ -102,13 +101,13 @@ $shopper->phone     = '+18885551212';
 
 $details = $client->OrderDomains($shopper, array($registration, $registration2));
 
-$session->userid = $details['user'];
-$session->orderid = $details['orderid'];
+$_SESSION['userid']  = $details['user'];
+$_SESSION['orderid'] = $details['orderid'];
 
 $messages = $client->Poll();
-$session->resources['example.biz'] = $messages[0]['resourceid'];
-$session->resources['example.us'] = $messages[1]['resourceid'];
+$_SESSION['resources']['example.biz'] = $messages[0]['resourceid'];
+$_SESSION['resources']['example.us'] = $messages[1]['resourceid'];
 
-echo "Complete, new user id is: " . $details['user'] . "\n\n";
-$session->completed[2] = true;
-
+// echo "Complete, new user id is: " . $details['user'] . "\n\n";
+$_SESSION['complete'][2] = true;
+echo json_encode(array('success' => true));

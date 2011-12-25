@@ -10,8 +10,10 @@
         <meta charset="utf-8">
         <meta name="author" content="Nicholas Miller <nicholas.j.miller@gmail.com>">
         
+        
         <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/buttons.css">
         
         <title>Wild West Certification Process</title>
     </head>
@@ -33,22 +35,78 @@
                 
                 
                 <br style="clear: both;" />
-                <h2>Provide Your Wild West OTE Credentials:</h2>
                 
                 <ul class="steps">
-                    <li class="active">0</li>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
+                    <li class="active">
+                        <h2>0</h2>
+                        <p>Setup</p>
+                    </li>
+                    <li>
+                        <h2>1</h2>
+                        <p>Check Availability</p>
+                    </li>
+                    <li>
+                        <h2>2</h2>
+                        <p>Registration</p>                        
+                    </li>
+                    <li>
+                        <h2>3</h2>
+                        <p>Domain By Poxy</p>
+                    </li>
+                    <li>
+                        <h2>4</h2>
+                        <p>Check Registration</p>
+                    </li>
+                    <li>
+                        <h2>5</h2>
+                        <p>Check Order Info</p>
+                    </li>
+                    <li>
+                        <h2>6</h2>
+                        <p>Domain Renewal</p>
+                    </li>
+                    <li class="last">
+                        <h2>7</h2>
+                        <p>Transfer</p>
+                    </li>
                 </ul>
+                <br style="clear: both;" />
+                
+                <div id="panel">
+                    
+                    <div id="collect-ote-credentials">
+                        <h2>Provide Your Wild West OTE Credentials:</h2>
+
+                        <label>Account Number</label>
+                        <input type="text" placeholder="i.e. 123456789" name="account_number" id="account_number" />
+
+                        <label>Account Password</label>
+                        <input type="text" placeholder="i.e. 02993" name="account_password" id="account_password" />
+
+                        <button class="skip">Submit</button>
+                    </div>
+                    
+                    <div id="processing">
+                        
+                    </div>
+                    
+                    <div id="error-message">
+                        
+                    </div>
+                    
+                </div>
+                
+                
             </div>
         </section>
         
+        <a href="http://github.com/nicholasmiller">
+            <img style="position: absolute; top: 0; left: 0; border: 0;" 
+                 src="https://a248.e.akamai.net/assets.github.com/img/5d21241b64dc708fcbb701f68f72f41e9f1fadd6/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub">
+        </a>
+        
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/spin.js"></script>
         <script type="text/javascript" src="assets/js/site.js"></script>
     </body>
     

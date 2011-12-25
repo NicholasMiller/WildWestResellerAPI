@@ -29,66 +29,15 @@
  * @subpackage Cetification
  */
 
-define('API_ACCOUNT', '');
-define('API_PASSWORD', '');
-
-if (API_ACCOUNT == '') {
-    die('Set the API_ACCOUNT Constant in ' . __FILE__);
-}
-
-if (API_PASSWORD == '') {
-    die('Set the API_PASSWORD Constant in ' . __FILE__);
-}
-
-
 set_include_path(
     get_include_path() . PATH_SEPARATOR .
-    realpath(__DIR__ . '/../library')
+    realpath(dirname(__FILE__) . '/../../library')
 );
 
-require_once 'Zend/Loader/Autoloader.php';
-$loader = Zend_Loader_Autoloader::getInstance();
-$loader->registerNamespace('WildWest_');
+session_start();
 
-class SessionSingleton
+function __autoload($class) 
 {
-    /**
-     * Gets an instance of the session
-     * @return Zend_Session_Namespace
-     */
-    public static function getInstance()
-    {
-        static $session = null;
-
-        if (!is_null($session)) {
-            return $session;
-        }
-
-        $session = new Zend_Session_Namespace('certification');
-        return $session;
-    }
+    require_once str_replace('_', DIRECTORY_SEPARATOR, $class) . '.php';
 }
-
-
-/**
- * Soap Client Factory
- */
-class Factory
-{
-    protected function  __construct()
-    {
-    }
-
-    /**
-     * @return WildWest_Reseller_Client
-     */
-    public static function buildClient()
-    {
-        return new WildWest_Reseller_Client(
-            WildWest_Reseller_Client::WSDL_OTE_TESTING,
-            API_ACCOUNT, API_PASSWORD
-        );
-    }
-}
-
 

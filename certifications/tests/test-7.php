@@ -63,8 +63,8 @@ require_once dirname(__FILE__) . '/common.php';
 $client = Factory::buildClient();
 $session = SessionSingleton::getInstance();
 
-if (empty($session->completed[6])) {
-    echo "Complete Step #6 first";
+if (empty($_SESSION['complete'][6])) {
+    echo json_encode(array('success' => false, 'message' => 'Complete Step #7 first'));
     exit();
 }
 
@@ -87,5 +87,7 @@ $transfer->order = $order;
 
 $response = $client->OrderDomainTransfers($shopper, array($transfer));
 
-echo "Step 7 & Certification Complete! (New Order ID: " . $response['orderid'] . ")";
-$session->completed[7] = true;
+// echo "Step 7 & Certification Complete! (New Order ID: " . $response['orderid'] . ")";
+$_SESSION['complete'][7] = true;
+
+echo json_encode(array('success' => true));

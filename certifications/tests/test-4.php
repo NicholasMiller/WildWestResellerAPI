@@ -30,14 +30,13 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$session = SessionSingleton::getInstance();
-if (empty($session->completed[3])) {
-    echo "Complete Step #3 first";
+if (empty($_SESSION['complete'][3])) {
+    echo json_encode(array('success' => false, 'message' => 'Complete Step #3 first'));
     exit();
 }
 
-Factory::buildClient()->CheckAvailability(array('example.biz', 'example.us'));
+$_SESSION['client']->CheckAvailability(array('example.biz', 'example.us'));
 
-echo "Step #4: Check Complete for example.biz and example.us";
-$session->completed[4] = true;
-
+//echo "Step #4: Check Complete for example.biz and example.us";
+$_SESSION['complete'][4] = true;
+echo json_encode(array('success' => true));
