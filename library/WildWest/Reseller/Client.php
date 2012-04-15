@@ -122,7 +122,8 @@ class WildWest_Reseller_Client extends SoapClient
         $result = $this->__call('ProcessRequest', array($data));
         
         if (strcasecmp('scripting status reset', $result->ProcessRequestResult) !== 0) {
-           throw new WildWest_Reseller_Exception($result->msg);
+            $xml = simplexml_load_string($result->ProcessRequestResult);
+            throw new WildWest_Reseller_Exception((string)$xml->result->msg);
         }
     }
 

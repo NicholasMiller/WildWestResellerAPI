@@ -42,10 +42,11 @@ $client = new WildWest_Reseller_Client(
 $_SESSION['account'] = $_REQUEST['account'];
 $_SESSION['pass']    = $_REQUEST['pass'];
 
-if ($client->RestartCertification()) {
+try {
+    $client->RestartCertification();
     echo json_encode(array('success' => true));
-} else {
-    echo json_encode(array('success' => false, "message" => "Your account credentials may be incorrect, or you have previously completed OTE Certification."));
+} catch (Exception $ex) {
+    echo json_encode(array('success' => false, "message" => $ex->getMessage()));
 }
 
 unset($_SESSION['complete']);
