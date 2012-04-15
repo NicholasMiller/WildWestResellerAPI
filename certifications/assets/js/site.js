@@ -27,6 +27,19 @@ $(function () {
         return false;
     }
     
+    function Step4 () {
+        var url = 'tests/test-4.php';
+        return {
+            execute: function () {
+                moveUiStep(4);
+                $.getJSON(url, function (resp) {
+                    if (!detectAndAlertError(resp)) {
+                        //new Step3().execute();
+                    }
+                });
+            }
+        };
+    }
     
     function Step3 () {
         var url = 'tests/test-3.php';
@@ -34,7 +47,9 @@ $(function () {
             execute: function () {
                 moveUiStep(3);
                 $.getJSON(url, function (resp) {
-                    return detectAndAlertError(resp);
+                    if (!detectAndAlertError(resp)) {
+                        new Step4().execute();
+                    }
                 });
             }
         };
@@ -77,6 +92,7 @@ $(function () {
         
         return {
             execute: function () {
+                moveUiStep(0);
                 $.getJSON(url, data, function (resp) {
                    if (!detectAndAlertError(resp)) {
                        new Step1().execute();

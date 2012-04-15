@@ -35,7 +35,12 @@ if (empty($_SESSION['complete'][3])) {
     exit();
 }
 
-$_SESSION['client']->CheckAvailability(array('example.biz', 'example.us'));
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
+
+$client->CheckAvailability(array('example.biz', 'example.us'));
 
 //echo "Step #4: Check Complete for example.biz and example.us";
 $_SESSION['complete'][4] = true;
