@@ -82,7 +82,7 @@ class WildWest_Reseller_Client extends SoapClient
         );
 
         $response = $this->__call('OrderDomains', array($data));
-        $xml      = new SimpleXMLElement($response);
+        $xml      = new SimpleXMLElement($response->OrderDomainsResult);
         $path     = $xml->xpath('/response/resdata/orderid');
         
         if (empty($path)) {
@@ -122,6 +122,7 @@ class WildWest_Reseller_Client extends SoapClient
         $result = $this->__call('ProcessRequest', array($data));
         
         if (strcasecmp('scripting status reset', $result->ProcessRequestResult) !== 0) {
+            // XML is only returned when there's an error. Thanks for the consitency, Godaddy!
             $xml = simplexml_load_string($result->ProcessRequestResult);
             throw new WildWest_Reseller_Exception((string)$xml->result->msg);
         }
@@ -142,8 +143,8 @@ class WildWest_Reseller_Client extends SoapClient
         );
 
         $response = $this->__call('CheckAvailability', array($data));
-
-        $xml      = new SimpleXMLElement($response);
+        
+        $xml = new SimpleXMLElement($response->CheckAvailabilityResult);
         /* @var $xml SimpleXMLElement */
 
         if (strcasecmp($xml->getName(), 'check')) {
@@ -346,7 +347,7 @@ class WildWest_Reseller_Client extends SoapClient
         );
 
         $response = $this->__call('Poll', array($data));
-        $xml = new SimpleXMLElement($response);
+        $xml = new SimpleXMLElement($response->PollResult);
         /* @var $xml SimpleXMLElement */
 
         $path = $xml->xpath('/response/resdata/REPORT/ITEM');

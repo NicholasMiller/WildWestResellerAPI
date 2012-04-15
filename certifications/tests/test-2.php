@@ -29,7 +29,10 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$client = $_SESSION['client'];
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
 
 if (empty($_SESSION['complete'][1])) {
     echo json_encode(array('success' => false, 'message' => 'Complete Step #1 first'));
