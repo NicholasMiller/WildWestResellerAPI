@@ -29,6 +29,9 @@
 
 require_once realpath(dirname(__FILE__) . '/common.php');
 
+session_destroy();
+session_start();
+
 if (empty($_REQUEST['account']) || empty($_REQUEST['pass'])) {
     echo json_encode(array('success' => false, 'message' => 'missing credentials.'));
     exit();

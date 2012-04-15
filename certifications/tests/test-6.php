@@ -53,8 +53,10 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$client = Factory::buildClient();
-$session = SessionSingleton::getInstance();
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
 
 if (empty($_SESSION['complete'][5])) {
     echo json_encode(array('success' => false, 'message' => 'Complete Step #5 first'));
@@ -100,9 +102,11 @@ $shopper->pwd  = 'abcde';
 $shopper->dbpuser = $_SESSION['dbpuser'];
 $shopper->dbppwd = 'defgh';
 
-$result = $client->OrderPrivateDomainRenewals($shopper, array($item, $item2), array($item3));
-
-// echo "Step #6: Domain Renewal Complete\n\n";
-$_SESSION['complete'][6] = true;
-
-echo json_encode(array('success' => true));
+try {
+    $result = $client->OrderPrivateDomainRenewals($shopper, array($item, $item2), array($item3));
+    $_SESSION['complete'][6] = true;
+    echo json_encode(array('success' => true));
+} catch (Exception $ex) {
+    throw $ex;
+    echo json_encode(array('success' => false, 'message' => $ex->getMessage()));
+}

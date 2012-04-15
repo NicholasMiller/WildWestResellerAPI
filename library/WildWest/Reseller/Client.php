@@ -264,15 +264,10 @@ class WildWest_Reseller_Client extends SoapClient
         );
 
         $response = $this->__call('OrderPrivateDomainRenewals', array($data));
-        $xml      = new SimpleXMLElement($response);
-        $path     = $xml->xpath('/response/resdata/orderid');
+        $xml      = new SimpleXMLElement($response->OrderPrivateDomainRenewalsResult);
 
-        if (empty($path)) {
-            $this->_throw(
-                __METHOD__, $response,
-                $this->getLastRequest(),
-                'expected xpath:/response/resdata/orderid'
-            );
+        if (empty($xml->resdata)) {
+            throw new WildWest_Reseller_Exception((string)$xml->result->msg->error, (string)$xml->result['code']);
         }
 
         return array(
