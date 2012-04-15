@@ -107,6 +107,5 @@ try {
     $_SESSION['complete'][6] = true;
     echo json_encode(array('success' => true));
 } catch (Exception $ex) {
-    throw $ex;
     echo json_encode(array('success' => false, 'message' => $ex->getMessage()));
 }

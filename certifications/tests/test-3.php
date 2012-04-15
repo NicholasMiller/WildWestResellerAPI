@@ -78,7 +78,7 @@ try {
     
 } catch (Exception $ex) {
     echo json_encode(array('success' => false, 'message' => $ex->getMessage() . 
-                            "Developer's note: This step seems to often fail during " . 
+                            " Developer's note: This step seems to often fail during " . 
                             "OTE certification. Try re-running the tests"));
 }
 

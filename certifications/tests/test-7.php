@@ -60,8 +60,11 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$client = Factory::buildClient();
-$session = SessionSingleton::getInstance();
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
+
 
 if (empty($_SESSION['complete'][6])) {
     echo json_encode(array('success' => false, 'message' => 'Complete Step #7 first'));
@@ -85,9 +88,10 @@ $transfer->sld = 'example';
 $transfer->tld = 'com';
 $transfer->order = $order;
 
-$response = $client->OrderDomainTransfers($shopper, array($transfer));
-
-// echo "Step 7 & Certification Complete! (New Order ID: " . $response['orderid'] . ")";
-$_SESSION['complete'][7] = true;
-
-echo json_encode(array('success' => true));
+try {
+    $response = $client->OrderDomainTransfers($shopper, array($transfer));
+    $_SESSION['complete'][7] = true;
+    echo json_encode(array('success' => true));
+} catch (Exception $ex) {
+    echo json_encode(array('success' => false, 'message' => $ex->getMessage()));
+}

@@ -11,6 +11,14 @@ $(function () {
         $('ul.steps li.step-' + step).addClass('active');
     }
     
+    function disableAccountInputs () {
+        $('#collect-ote-credentials').attr('readonly', 'readonly').attr('disabled', 'disabled');
+    }
+    
+    function enableAccountInputs () {
+        $('#collect-ote-credentials').removeAttr('readonly').removeAttr('disabled');
+    }
+    
     // Alerts server error messages. 
     // @return boolean, true if error was discovered. False otherwise.
     function detectAndAlertError(serverResponse) {
@@ -21,10 +29,25 @@ $(function () {
             }
             
             window.alert(error);
+            enableAccountInputs();
             return true;
         }
         
         return false;
+    }
+    
+    function Step7 () {
+        var url = 'tests/test-7.php';
+        return {
+            execute: function () {
+                moveUiStep(7);
+                $.getJSON(url, function (resp) {
+                    if (!detectAndAlertError(resp)) {
+                        window.alert("Congratulations! Your Wild West Account should now be certified.");
+                    }
+                });
+            }
+        };
     }
     
     function Step6 () {
@@ -34,7 +57,7 @@ $(function () {
                 moveUiStep(6);
                 $.getJSON(url, function (resp) {
                     if (!detectAndAlertError(resp)) {
-                        //new Step3().execute();
+                        new Step7().execute();
                     }
                 });
             }
@@ -133,6 +156,7 @@ $(function () {
     
     
     $('#collect-ote-credentials button').click(function(){
+        disableAccountInputs();
         new Step0().execute();
     });
     

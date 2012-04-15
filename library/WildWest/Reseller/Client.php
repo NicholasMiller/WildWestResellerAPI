@@ -120,7 +120,7 @@ class WildWest_Reseller_Client extends SoapClient
         );
         
         $result = $this->__call('ProcessRequest', array($data));
-        
+
         if (strcasecmp('scripting status reset', $result->ProcessRequestResult) !== 0) {
             // XML is only returned when there's an error. Thanks for the consitency, Godaddy!
             $xml = simplexml_load_string($result->ProcessRequestResult);
@@ -299,15 +299,10 @@ class WildWest_Reseller_Client extends SoapClient
         );
 
         $response = $this->__call('OrderDomainTransfers', array($data));
-        $xml      = new SimpleXMLElement($response);
-        $path     = $xml->xpath('/response/resdata/orderid');
-
-        if (empty($path)) {
-            $this->_throw(
-                __METHOD__, $response,
-                $this->getLastRequest(),
-                'expected xpath:/response/resdata/orderid'
-            );
+        $xml      = new SimpleXMLElement($response->OrderDomainTransfersResult);
+        
+        if (empty($xml->resdata)) {
+            throw new WildWest_Reseller_Exception($xml->response->msg->error, $xml->response['code']);
         }
 
         return array(
