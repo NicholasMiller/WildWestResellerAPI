@@ -1,18 +1,20 @@
 Wild West (GoDaddy Reseller) PHP API 
 =============
 
-This library connects to GoDaddy's Wild West Reseller SOAP API 
-using PHP's built-in SOAP functionality. Previously, this library required 
-Zend Framework. This is no longer the case.
+WildWestResellerAPI is a SOAP connector for GoDaddy's Wild West Reseller API. 
+It relies only on PHP's built-in SOAP functionality. If you previously looked at this
+library, you may have noticed it required Zend Framework. That is no longer the case.
+
 
 Certification Scripts
 -------
 
-If you have a Wild West account -I assume you do- you're familiar with the 
-headache that is OTE Certification. In this project you will find a wizard to
-complete this for you. Simply place the entire project directory on your 
-server, access the "certifications" directory, enter your OTE credentials, 
-and voila you're done.
+The main thrust for writing this was to complete Wild West's 
+ridiculously complicated OTE certification process. Thus, with the SOAP API, I 
+have included a wizard to complete each part of the certification process. To use it, simply 
+place the entire project directory on a PHP-enabled web server, 
+open "certifications/index.html" in your web browser, enter your OTE 
+credentials, and voila you're done. 
 
 ### OTE Certification vs Production WSDL files.
 
