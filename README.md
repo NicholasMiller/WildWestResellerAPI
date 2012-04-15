@@ -14,6 +14,13 @@ complete this for you. Simply place the entire project directory on your
 server, access the "certifications" directory, enter your OTE credentials, 
 and voila you're done.
 
+### OTE Certification vs Production WSDL files.
+
+The WildWest_Reseller_Client class defines two URL constants for the WSDL files 
+used during OTE Certification and Production API interaction. 
+These constants are: WildWest_Reseller_Client::WSDL_OTE_TESTING and 
+WildWest_Reseller_Client::WSDL_PRODUCTION
+
 
 API Examples
 -------

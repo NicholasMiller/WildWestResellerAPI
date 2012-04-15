@@ -148,11 +148,7 @@ class WildWest_Reseller_Client extends SoapClient
         /* @var $xml SimpleXMLElement */
 
         if (strcasecmp($xml->getName(), 'check')) {
-            $this->_throw(
-                __METHOD__, $response,
-                $this->getLastRequest(),
-                'Maformed result'
-            );
+            throw new WildWest_Reseller_Exception('Malformed Result');
         }
         
         $available = array();
@@ -228,12 +224,8 @@ class WildWest_Reseller_Client extends SoapClient
         $response = $this->__call('OrderDomainRenewals', array($data));
 
         $xml  = new SimpleXMLElement($response);
-        $path = $xml->xpath('/response/resdata/orderid');
-        if (empty($path)) {
-            $this->_throw(
-                __METHOD__, $response, $this->getLastRequest(),
-                'Should have recieved xpath:/response/resdata/orderid'
-            );
+        if (empty($xml->resdata)) {
+            throw new WildWest_Reseller_Exception('Did not receive resdata in response');
         }
 
         return array(
@@ -356,7 +348,6 @@ class WildWest_Reseller_Client extends SoapClient
     /**
      * Gets information about items that have been previously ordered.
      *
-     * @todo fix implementation
      * @return 
      */
     public function Info($resourceid, $domain, $orderid)
@@ -384,8 +375,6 @@ class WildWest_Reseller_Client extends SoapClient
         return $info;
     }
 
-
-
     /**
      * Returns a unique client transaction id
      * @return string
@@ -393,37 +382,6 @@ class WildWest_Reseller_Client extends SoapClient
     public function getClientTransactionId()
     {
         return sha1(uniqid(null, true));
-    }
-
-    /**
-     * Removes the <?xml ?> encoding string, being this causes issues with SimpleXMLElement
-     * @param string $result
-     * @return string
-     */
-    protected function _preProcessResult($result)
-    {
-        return preg_replace('/<\?xml(.*)?\?>/', '', parent::_preProcessResult($result));
-    }
-
-    /**
-     * Throws an exception that's nicely fomatted for debugging purposes
-     * 
-     * @param string $method Method name that was called
-     * @param string $response Raw XML response string provided by GoDaddy
-     * @param string $request Request string sent to GoDaddy
-     * @param string $information Any additional information important to the exception
-     * 
-     * @return void
-     */
-    protected function _throw($method, $response, $request, $information = null)
-    {
-        $msg = "There was an error performing the operation: $method.\n" .
-            "Request XML: $request \n" .
-            "Server Response: $response \n" .
-            "Server WSDL: " . $this->getWsdl() . "\n" .
-            "Additional Information: " . (empty($information) ? 'None provided' : $information) . "\n";
-
-        throw new WildWest_Reseller_Exception($msg);
     }
 }
 

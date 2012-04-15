@@ -111,6 +111,5 @@ $messages = $client->Poll();
 $_SESSION['resources']['example.biz'] = $messages[0]['resourceid'];
 $_SESSION['resources']['example.us'] = $messages[1]['resourceid'];
 
-// echo "Complete, new user id is: " . $details['user'] . "\n\n";
 $_SESSION['complete'][2] = true;
 echo json_encode(array('success' => true));
