@@ -191,13 +191,11 @@ class WildWest_Reseller_Client extends SoapClient
 
         $response = $this->__call('OrderDomainPrivacy', array($data));
 
-        $xml  = new SimpleXMLElement($response);
-        $path = $xml->xpath('/response/resdata/orderid');
-
-        if (empty($path)) {
-            $this->_throw(
-                __METHOD__, $response, $this->getLastRequest(),
-                'Should have recieved xpath:/response/resdata/orderid'
+        $xml  = new SimpleXMLElement($response->OrderDomainPrivacyResult);
+        
+        if (empty($xml->resdata) || empty($xml->resdata->orderid)) {
+            throw new WildWest_Reseller_Exception (
+                'Did not receive an orderid from order domain with privacy'
             );
         }
 

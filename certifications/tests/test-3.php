@@ -29,8 +29,12 @@
 
 require_once dirname(__FILE__) . '/common.php';
 
-$client = $_SESSION['client'];
-$session = SessionSingleton::getInstance();
+
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
+
 
 if (empty($_SESSION['complete'][2])) {
     echo json_encode(array('success' => false, 'message' => 'Complete Step #2 first'));
@@ -60,13 +64,22 @@ $dbp->tld        = 'biz';
 $dbp->order      = $order;
 $dbp->resourceid = $_SESSION['resources']['example.biz'];
 
-$response = $client->OrderDomainPrivacy($shopper, array($dbp));
+try {
+    
+    $response = $client->OrderDomainPrivacy($shopper, array($dbp));
+    $messages = $client->Poll();
+    $_SESSION['resources']['example.biz-dbp'] = $messages[0]['resourceid'];
+    $_SESSION['dbporderid']                   = $messages[0]['orderid'];
+    $_SESSION['dbpuser']                      = $response['dbpuser'];
 
-$messages = $client->Poll();
-$_SESSION['resources']['example.biz-dbp'] = $messages[0]['resourceid'];
-$_SESSION['dbporderid']                   = $messages[0]['orderid'];
-$_SESSION['dbpuser']                      = $response['dbpuser'];
+    // echo "Step 3: Complete";
+    $_SESSION['complete'][3] = true;
+    echo json_encode(array('success' => true));
+    
+} catch (Exception $ex) {
+    echo json_encode(array('success' => false, 'message' => $ex->getMessage() . 
+                            "Developer's note: This step seems to often fail during " . 
+                            "OTE certification. Try re-running the tests"));
+}
 
-// echo "Step 3: Complete";
-$_SESSION['complete'][3] = true;
-echo json_encode(array('success' => true));
+

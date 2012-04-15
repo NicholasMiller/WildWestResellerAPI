@@ -28,13 +28,28 @@ $(function () {
     }
     
     
+    function Step3 () {
+        var url = 'tests/test-3.php';
+        return {
+            execute: function () {
+                moveUiStep(3);
+                $.getJSON(url, function (resp) {
+                    return detectAndAlertError(resp);
+                });
+            }
+        };
+    }
+    
     function Step2 () {
+        var url = 'tests/test-2.php';
+        
         return {
             execute: function () {
                 moveUiStep(2);
-                var url = 'tests/test-2.php';
                 $.getJSON(url, function (resp) {
-                    return detectAndAlertError(resp);
+                    if (!detectAndAlertError(resp)) {
+                        new Step3().execute();
+                    }
                 });
             }
         };
