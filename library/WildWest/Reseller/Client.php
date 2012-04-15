@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Used at various points in this class.
+ * @see WildWest_Reseller_Exception
+ */
+require_once realpath(dirname(__FILE__) . '/Exception.php');
+
 /**
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -94,6 +101,7 @@ class WildWest_Reseller_Client extends SoapClient
     /**
      * Restarts the certification process
      * @return void
+     * @throws WildWest_Reseller_Exception If the certification was not successful. Contains error message from server.
      */
     public function RestartCertification()
     {
@@ -110,10 +118,12 @@ class WildWest_Reseller_Client extends SoapClient
         $data = array(
             'sRequestXML' => $xml
         );
-
+        
         $result = $this->__call('ProcessRequest', array($data));
         
-        return strcasecmp('scripting status reset', $result->ProcessRequestResult) === 0;
+        if (strcasecmp('scripting status reset', $result->ProcessRequestResult) !== 0) {
+           throw new WildWest_Reseller_Exception($result->msg);
+        }
     }
 
     /**
