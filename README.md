@@ -10,7 +10,7 @@ Certification Scripts
 -------
 
 The main thrust for writing this was to complete Wild West's 
-ridiculously complicated OTE certification process. Thus, with the SOAP API, I 
+ridiculously complicated OTE certification process. Thus, along with the SOAP API, I 
 have included a wizard to complete each part of the certification process. To use it, simply 
 place the entire project directory on a PHP-enabled web server, 
 open "certifications/index.html" in your web browser, enter your OTE 
