@@ -27,6 +27,22 @@ $(function () {
         return false;
     }
     
+    
+    function Step5 () {
+        var url = 'tests/test-5.php';
+        return {
+            execute: function () {
+                moveUiStep(5);
+                $.getJSON(url, function (resp) {
+                    if (!detectAndAlertError(resp)) {
+                        //new Step3().execute();
+                    }
+                });
+            }
+        };
+    }
+    
+    
     function Step4 () {
         var url = 'tests/test-4.php';
         return {
@@ -34,7 +50,7 @@ $(function () {
                 moveUiStep(4);
                 $.getJSON(url, function (resp) {
                     if (!detectAndAlertError(resp)) {
-                        //new Step3().execute();
+                        new Step5().execute();
                     }
                 });
             }

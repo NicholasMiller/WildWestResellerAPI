@@ -35,10 +35,15 @@ if (empty($_SESSION['complete'][4])) {
     exit();
 }
 
-$client = $_SESSION['client'];
-$info   = $client->Info($session->resources['example.biz'], 'example.biz', $session->orderid);
+$client = new WildWest_Reseller_Client(
+    WildWest_Reseller_Client::WSDL_OTE_TESTING, 
+    $_SESSION['account'], $_SESSION['pass']
+);
 
-//echo "Step #5: Info Complete\n\n";
-
-$_SESSION['complete'][5] = true;
-echo json_encode(array('succes' => true));
+try {
+    $info = $client->Info($_SESSION['resources']['example.biz'], 'example.biz', $_SESSION['orderid']);
+    $_SESSION['complete'][5] = true;
+    echo json_encode(array('success' => true));
+} catch (Exception $ex) {
+    echo json_encode(array('success' => false, 'message' => $ex->getMessage()));
+}

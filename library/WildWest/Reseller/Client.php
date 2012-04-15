@@ -380,15 +380,10 @@ class WildWest_Reseller_Client extends SoapClient
         );
 
         $response = $this->__call('Info', array($data));
-
-        $xml  = new SimpleXMLElement($response);
-        $path = $xml->xpath('/response/resdata/info');
-
-        if (empty($path)) {
-            $this->_throw(
-                __METHOD__, $response, $this->getLastRequest(),
-                'Should have recieved xpath:/response/resdata/info'
-            );
+        $xml  = new SimpleXMLElement($response->InfoResult);
+        
+        if (empty($xml->resdata)) {
+            throw new WildWest_Reseller_Exception((string)$xml->result->msg->error, (string)$xml->result['code']);
         }
 
         $info = array();
