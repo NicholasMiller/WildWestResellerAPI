@@ -11,7 +11,7 @@ Certification Scripts
 If you have a Wild West account -I assume you do- you're familiar with the 
 headache that is OTE Certification. In this project you will find a wizard to
 complete this for you. Simply place the entire project directory on your 
-server, access the "certifications" directory, entery your OTE credentials, 
+server, access the "certifications" directory, enter your OTE credentials, 
 and voila you're done.
 
 
