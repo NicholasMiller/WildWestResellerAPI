@@ -27,10 +27,10 @@
  * @subpackage Cetification
  */
 
-require_once dirname(__FILE__) . '/common.php';
+require_once realpath(dirname(__FILE__) . '/common.php');
 
 if (empty($_REQUEST['account']) || empty($_REQUEST['pass'])) {
-    echo json_encode(array('succss' => false, 'message' => 'missing credentials.'));
+    echo json_encode(array('success' => false, 'message' => 'missing credentials.'));
     exit();
 }
 
@@ -45,7 +45,7 @@ $_SESSION['pass']    = $_REQUEST['pass'];
 if ($client->RestartCertification()) {
     echo json_encode(array('success' => true));
 } else {
-    echo json_encode(array('success' => false));
+    echo json_encode(array('success' => false, "message" => "Your account credentials may be incorrect, or you have previously completed OTE Certification."));
 }
 
 unset($_SESSION['complete']);
