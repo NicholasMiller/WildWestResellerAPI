@@ -78,6 +78,7 @@ $shopper->email = 'joe@smith.us';
 $shopper->phone = '+1.7775551212';
 $shopper->pwd = 'ghijk';
 $shopper->user = 'createNew';
+$shopper->acceptOrderTOS = 'agree';
 
 $order = new WildWest_Reseller_OrderItem();
 $order->productid = '350011';

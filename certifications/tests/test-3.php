@@ -51,6 +51,7 @@ $shopper->email     = 'agordon@wildwestdomains.com';
 $shopper->dbpuser   = 'createNew';
 $shopper->dbppwd    = 'defgh';
 $shopper->dbpemail  = 'info@example.biz';
+$shopper->acceptOrderTOS = 'agree';
 
 $order = new WildWest_Reseller_OrderItem();
 $order->productid = '377001';
