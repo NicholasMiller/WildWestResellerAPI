@@ -101,15 +101,20 @@ $shopper->email     = 'agordon@wildwestdomains.com';
 $shopper->user      = 'createNew';
 $shopper->pwd       = 'abcde';
 $shopper->phone     = '+18885551212';
+$shopper->acceptOrderTOS = 'agree';
 
-$details = $client->OrderDomains($shopper, array($registration, $registration2));
+try {
+	$details = $client->OrderDomains($shopper, array($registration, $registration2));
 
-$_SESSION['userid']  = $details['user'];
-$_SESSION['orderid'] = $details['orderid'];
+	$_SESSION['userid']  = $details['user'];
+	$_SESSION['orderid'] = $details['orderid'];
 
-$messages = $client->Poll();
-$_SESSION['resources']['example.biz'] = $messages[0]['resourceid'];
-$_SESSION['resources']['example.us'] = $messages[1]['resourceid'];
+	$messages = $client->Poll();
+	$_SESSION['resources']['example.biz'] = $messages[0]['resourceid'];
+	$_SESSION['resources']['example.us'] = $messages[1]['resourceid'];
 
-$_SESSION['complete'][2] = true;
-echo json_encode(array('success' => true));
+	$_SESSION['complete'][2] = true;
+	echo json_encode(array('success' => true));
+} catch (Exception $ex) {
+    echo json_encode(array('success' => false, 'message' => $ex->getMessage()));
+}

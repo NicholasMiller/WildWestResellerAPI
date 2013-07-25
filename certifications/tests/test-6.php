@@ -101,6 +101,7 @@ $shopper->user = $_SESSION['userid'];
 $shopper->pwd  = 'abcde';
 $shopper->dbpuser = $_SESSION['dbpuser'];
 $shopper->dbppwd = 'defgh';
+$shopper->acceptOrderTOS = 'agree';
 
 try {
     $result = $client->OrderPrivateDomainRenewals($shopper, array($item, $item2), array($item3));

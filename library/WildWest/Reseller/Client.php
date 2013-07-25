@@ -84,6 +84,10 @@ class WildWest_Reseller_Client extends SoapClient
         $response = $this->__call('OrderDomains', array($data));
         $xml      = new SimpleXMLElement($response->OrderDomainsResult);
         $path     = $xml->xpath('/response/resdata/orderid');
+
+        if (empty($xml->resdata)) {
+            throw new WildWest_Reseller_Exception((string)$xml->result->msg->error);
+        }
         
         if (empty($path)) {
             throw new RuntimeException(
@@ -189,7 +193,9 @@ class WildWest_Reseller_Client extends SoapClient
 
         $xml  = new SimpleXMLElement($response->OrderDomainPrivacyResult);
         
-        if (empty($xml->resdata) || empty($xml->resdata->orderid)) {
+        if (empty($xml->resdata)) {
+            throw new WildWest_Reseller_Exception((string)$xml->result->msg->error);
+        } elseif( empty($xml->resdata->orderid) ) {
             throw new WildWest_Reseller_Exception (
                 'Did not receive an orderid from order domain with privacy'
             );
@@ -294,7 +300,7 @@ class WildWest_Reseller_Client extends SoapClient
         $xml      = new SimpleXMLElement($response->OrderDomainTransfersResult);
         
         if (empty($xml->resdata)) {
-            throw new WildWest_Reseller_Exception($xml->response->msg->error, $xml->response['code']);
+            throw new WildWest_Reseller_Exception((string)$xml->result->msg->error);
         }
 
         return array(
